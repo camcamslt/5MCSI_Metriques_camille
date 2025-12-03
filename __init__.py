@@ -38,6 +38,7 @@ def histogramme():
 @app.route('/commits/')
 def commits():
     return render_template("commits.html")
+  GITHUB_COMMITS_URL = "https://api.github.com/repos/camcalslt/5MCSI_Metriques_camille/commits"
   
 @app.route('/extract-minutes/<date_string>')
 def extract_minutes(date_string):
