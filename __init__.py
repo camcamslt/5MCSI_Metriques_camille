@@ -35,8 +35,8 @@ def mongraphique():
 def histogramme():
     return render_template("histogramme.html")
   
-GITHUB_COMMITS_URL = "https://api.github.com/repos/camcalslt/5MCSI_Metriques_camille/commits"
-  
+GITHUB_COMMITS_URL = "https://api.github.com/repos/camcamslt/5MCSI_Metriques_camille/commits"
+
 
 @app.route("/commits-data/")
 def commits_data():
@@ -82,6 +82,7 @@ def commits_data():
 def commits_page():
     # Page HTML avec le graphique
     return render_template("commits.html")
+
 
   
 if __name__ == "__main__":
