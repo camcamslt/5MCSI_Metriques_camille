@@ -12,7 +12,7 @@
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(dessinerChart);
 
-fonction drawChart() {
+function drawChart(){
 // On récupère les données depuis la route Flask
 récupérer('/commits-data/')
 .then(réponse => réponse.json())
