@@ -1,257 +1,152 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyse des Commits - Tawarano</title>
-    
-    <!-- Chargement de Google Charts -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <title>Analyse des Commits</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            margin: 0;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-
         h1 {
-            color: #1e3c72;
+            color: #333;
             text-align: center;
-            margin-bottom: 10px;
-            font-size: 2.5em;
+            margin-bottom: 30px;
         }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 40px;
-            font-size: 1.1em;
-        }
-
         #chart_div {
             width: 100%;
             height: 500px;
-            margin: 30px 0;
         }
-
         .loading {
             text-align: center;
             padding: 50px;
             font-size: 1.2em;
-            color: #666;
         }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #1e3c72;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            display: flex;
+            justify-content: space-around;
             margin-top: 30px;
         }
-
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .stat-card h3 {
-            font-size: 0.9em;
-            margin-bottom: 10px;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .stat-card p {
-            font-size: 2.5em;
-            font-weight: bold;
-        }
-
-        .back-link {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .back-link a {
-            color: #1e3c72;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1em;
-            transition: color 0.3s ease;
-        }
-
-        .back-link a:hover {
-            color: #667eea;
-            text-decoration: underline;
-        }
-
-        .error {
-            background: #ff4444;
+        .stat-box {
+            background: #667eea;
             color: white;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            margin: 20px 0;
+        }
+        .stat-box h3 {
+            margin: 0 0 10px 0;
+            font-size: 0.9em;
+        }
+        .stat-box p {
+            margin: 0;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📊 Analyse des Commits</h1>
-        <p class="subtitle">Distribution des commits par minute (0-59)</p>
-
+        <h1>📊 Analyse des Commits par Minute</h1>
+        
         <div id="loading" class="loading">
-            <div class="spinner"></div>
-            <p>Chargement des données depuis GitHub...</p>
+            Chargement des données...
         </div>
-
-        <div id="error" style="display: none;"></div>
-
-        <div id="chart_div" style="display: none;"></div>
-
-        <div id="stats" class="stats" style="display: none;">
-            <div class="stat-card">
-                <h3>Total de Commits</h3>
-                <p id="total-commits">0</p>
+        
+        <div id="chart_div" style="display:none;"></div>
+        
+        <div id="stats" class="stats" style="display:none;">
+            <div class="stat-box">
+                <h3>Total Commits</h3>
+                <p id="total">0</p>
             </div>
-            <div class="stat-card">
-                <h3>Minute la plus active</h3>
-                <p id="peak-minute">-</p>
+            <div class="stat-box">
+                <h3>Minute la + active</h3>
+                <p id="peak">-</p>
             </div>
-            <div class="stat-card">
-                <h3>Commits max/minute</h3>
-                <p id="max-commits">0</p>
+            <div class="stat-box">
+                <h3>Max commits/minute</h3>
+                <p id="max">0</p>
             </div>
         </div>
-
-        <div class="back-link">
-            <a href="/">← Retour à l'accueil</a>
-        </div>
+        
+        <a href="/">← Retour</a>
     </div>
 
-    <script type="text/javascript">
-        // Charger Google Charts
+    <script>
         google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(loadCommitsData);
+        google.charts.setOnLoadCallback(loadData);
 
-        function loadCommitsData() {
-            // Récupérer les données depuis notre API Flask
+        function loadData() {
             fetch('/api/commits-data')
                 .then(response => response.json())
                 .then(data => {
-                    if (data.error) {
-                        showError(data.error);
-                        return;
-                    }
-                    
-                    // Masquer le loading
                     document.getElementById('loading').style.display = 'none';
-                    
-                    // Afficher le graphique et les stats
                     document.getElementById('chart_div').style.display = 'block';
-                    document.getElementById('stats').style.display = 'grid';
+                    document.getElementById('stats').style.display = 'flex';
                     
-                    // Dessiner le graphique
                     drawChart(data);
-                    
-                    // Afficher les statistiques
-                    displayStats(data);
+                    showStats(data);
                 })
                 .catch(error => {
-                    showError('Erreur lors du chargement des données : ' + error);
+                    document.getElementById('loading').innerHTML = 
+                        '❌ Erreur : ' + error;
                 });
         }
 
         function drawChart(data) {
-            // Préparer les données pour Google Charts
-            var chartData = [['Minute', 'Nombre de Commits']];
-            
+            var chartData = [['Minute', 'Commits']];
             for (let i = 0; i < data.minutes.length; i++) {
                 chartData.push([data.minutes[i].toString(), data.counts[i]]);
             }
             
             var dataTable = google.visualization.arrayToDataTable(chartData);
-
+            
             var options = {
                 title: 'Nombre de commits par minute',
                 width: '100%',
                 height: 500,
-                hAxis: {
-                    title: 'Minute (0-59)',
-                    gridlines: { count: 12 }
-                },
-                vAxis: {
-                    title: 'Nombre de commits',
-                    minValue: 0
-                },
+                hAxis: {title: 'Minute (0-59)'},
+                vAxis: {title: 'Nombre de commits', minValue: 0},
                 colors: ['#667eea'],
-                legend: { position: 'none' },
-                bar: { groupWidth: '90%' },
-                chartArea: {
-                    width: '85%',
-                    height: '70%'
-                }
+                legend: {position: 'none'}
             };
 
             var chart = new google.visualization.ColumnChart(
                 document.getElementById('chart_div')
             );
-
             chart.draw(dataTable, options);
         }
 
-        function displayStats(data) {
-            // Calculer le total de commits
-            const totalCommits = data.counts.reduce((a, b) => a + b, 0);
+        function showStats(data) {
+            const total = data.counts.reduce((a, b) => a + b, 0);
+            const max = Math.max(...data.counts);
+            const peak = data.counts.indexOf(max);
             
-            // Trouver la minute avec le plus de commits
-            const maxCommits = Math.max(...data.counts);
-            const peakMinute = data.counts.indexOf(maxCommits);
-            
-            // Afficher les statistiques
-            document.getElementById('total-commits').textContent = totalCommits;
-            document.getElementById('peak-minute').textContent = peakMinute;
-            document.getElementById('max-commits').textContent = maxCommits;
+            document.getElementById('total').textContent = total;
+            document.getElementById('peak').textContent = peak;
+            document.getElementById('max').textContent = max;
         }
-
-        function showError(message) {
-            document.getElementById('loading').style.display = 'none';
-            const errorDiv = document.getElementById('error');
-            errorDiv.className = 'error';
-            errorDiv.textContent = '
+    </script>
+</body>
+</html>
