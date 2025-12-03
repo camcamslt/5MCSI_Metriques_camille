@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contactez-nous - Tawarano</title>
+    <title>Contactez-nous </title>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
@@ -21,7 +21,7 @@
             overflow-x: hidden;
         }
 
-        /* Fond animé avec des vagues */
+   
         .wave-background {
             position: fixed;
             top: 0;
@@ -63,7 +63,7 @@
             }
         }
 
-        /* Container principal */
+   
         .main-container {
             min-height: 100vh;
             display: flex;
@@ -81,7 +81,7 @@
             align-items: stretch;
         }
 
-        /* Carte de gauche - Informations */
+   
         .info-card {
             flex: 1;
             background: rgba(255, 255, 255, 0.05);
@@ -189,7 +189,7 @@
             margin: 0;
         }
 
-        /* Carte de droite - Formulaire */
+       
         .form-card {
             flex: 1;
             background: rgba(255, 255, 255, 0.05);
@@ -252,7 +252,6 @@
             min-height: 120px;
         }
 
-        /* Effet de ligne animée sous les inputs */
         .input-line {
             position: absolute;
             bottom: 0;
@@ -329,7 +328,7 @@
             transform: translateX(-5px);
         }
 
-        /* Étoiles scintillantes */
+       
         .stars {
             position: fixed;
             top: 0;
@@ -358,7 +357,7 @@
             }
         }
 
-        /* Animations d'entrée */
+      
         @keyframes slideInLeft {
             from {
                 opacity: 0;
@@ -381,7 +380,7 @@
             }
         }
 
-        /* Responsive */
+      
         @media (max-width: 968px) {
             .contact-wrapper {
                 flex-direction: column;
@@ -410,21 +409,21 @@
     </style>
 </head>
 <body>
-    <!-- Fond avec vagues animées -->
+  
     <div class="wave-background">
         <div class="wave"></div>
         <div class="wave"></div>
         <div class="wave"></div>
     </div>
 
-    <!-- Étoiles scintillantes -->
+ 
     <div class="stars" id="stars"></div>
 
-    <!-- Container principal -->
+    
     <div class="main-container">
         <div class="contact-wrapper">
             
-            <!-- Carte informations -->
+           
             <div class="info-card">
                 <div class="info-content">
                     <h1>Parlons ensemble</h1>
@@ -467,7 +466,7 @@
                             </div>
                             <div class="detail-text">
                                 <h3>Adresse</h3>
-                                <p>123 Rue de Tawarano, France</p>
+                                <p>123 Rue de paris, France</p>
                             </div>
                         </div>
 
@@ -486,7 +485,7 @@
                 </div>
             </div>
 
-            <!-- Carte formulaire -->
+        
             <div class="form-card">
                 <h2>Envoyez un message</h2>
                 
@@ -545,7 +544,7 @@
     </div>
 
     <script>
-        // Générer des étoiles aléatoires
+      
         const starsContainer = document.getElementById('stars');
         for (let i = 0; i < 100; i++) {
             const star = document.createElement('div');
@@ -556,11 +555,11 @@
             starsContainer.appendChild(star);
         }
 
-        // Gestion du formulaire
+   
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Animation du bouton
+           
             const btn = this.querySelector('.submit-btn');
             btn.textContent = 'Message envoyé !';
             btn.style.background = 'linear-gradient(135deg, #00ff88 0%, #00cc66 100%)';
@@ -572,7 +571,7 @@
             }, 2000);
         });
 
-        // Effet parallaxe sur les cartes au mouvement de la souris
+      
         document.addEventListener('mousemove', (e) => {
             const cards = document.querySelectorAll('.info-card, .form-card');
             const x = e.clientX / window.innerWidth;
