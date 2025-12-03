@@ -2,7 +2,7 @@ from flask import Flask, render_template_string, render_template, jsonify
 from flask import render_template
 from flask import json
 from datetime import datetime
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 import sqlite3
                                                                                                                                        
 app = Flask(__name__)                                                                                                                  
@@ -35,10 +35,7 @@ def mongraphique():
 def histogramme():
     return render_template("histogramme.html")
   
-@app.route('/commits/')
-def commits():
-    return render_template("commits.html")
-  GITHUB_COMMITS_URL = "https://api.github.com/repos/camcalslt/5MCSI_Metriques_camille/commits"
+GITHUB_COMMITS_URL = "https://api.github.com/repos/camcalslt/5MCSI_Metriques_camille/commits"
   
 
 @app.route("/commits-data/")
